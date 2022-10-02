@@ -1,0 +1,37 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script src="./matrix.js"></script>
+<script src="./canvas-arbitrary-quads.js"></script>
+
+<canvas id="myCanvas" width="472" height="475"></canvas>
+
+<p/>
+
+<img id="markerImg" src="./Hiro_marker_ARjs.png"></img>
+
+<script>
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext('2d');
+
+  const srcPoints = [
+    { x: 0, y: 0 },
+    { x: 0, y: 475 },
+    { x: 472, y: 475 },
+    { x: 472, y: 0 },
+  ];
+
+  const dstPoints = [
+    { x: 128, y: 90 },
+    { x: 255, y: 128 },
+    { x: 128, y: 192 },
+    { x: 0, y: 128 },
+  ];
+
+image = document.getElementById('markerImg')
+drawArbitraryQuadImage(ctx, image, srcPoints, dstPoints, FILL_METHOD.BILINEAR);
+
+// myCanvas
+  //   console.log(canvas.toDataURL());
+  // });
+
+</script>
