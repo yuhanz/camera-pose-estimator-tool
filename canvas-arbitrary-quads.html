@@ -61,7 +61,7 @@ drawArbitraryQuadImage(ctx, image, srcPoints, dstPoints, FILL_METHOD.BILINEAR);
   document.body.appendChild(renderer.domElement);
 
   // array of functions for the rendering loop
-  var arToolkitContext, arMarkerControls;
+  var arToolkitContext
 
   //////////////////////////////////////////////////////////////////////////////////
   //		Initialize a basic camera
@@ -147,17 +147,6 @@ drawArbitraryQuadImage(ctx, image, srcPoints, dstPoints, FILL_METHOD.BILINEAR);
       window.arToolkitContext = arToolkitContext;
     })
 
-    // MARKER
-    arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
-      type: 'pattern',
-      patternUrl: '/patt.hiro',
-      // patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji',
-      // as we controls the camera, set changeMatrixMode: 'cameraTransformMatrix'
-      changeMatrixMode: 'cameraTransformMatrix'
-    })
-
-    console.log('ArMarkerControls', arMarkerControls);
-    window.arMarkerControls = arMarkerControls;
   }
 
 
@@ -181,6 +170,9 @@ drawArbitraryQuadImage(ctx, image, srcPoints, dstPoints, FILL_METHOD.BILINEAR);
     }
   }
 
+  // When the image is updated:
+  //   arToolkitSource.domElement.src = "data:image/png;base64,i..."
+  //   initARContext()
   function getMarkerTransformMat() {
     arToolkitContext.update(arToolkitSource.domElement)
     return arToolkitContext.arController.marker_transform_mat
