@@ -9,13 +9,14 @@
 <script src="/ar-threex.js"></script>
 
 
-<canvas id="myCanvas" width="472" height="475"></canvas>
+<canvas id="myCanvas" width="472" height="475" onmousedown="onCanvasMouseDown(event)" onmouseup="onCanvasMouseUp(event)"></canvas>
 
 <p/>
 
 <img id="markerImg" src="./Hiro_marker_ARjs.png"></img>
 <br>
 <input type="file" id="myFile" accept="image/png, image/jpeg" onchange="openImage(event)">
+<div id="resultDiv" />
 
 <script>
   function drawQuad(dstPoints) {
@@ -34,12 +35,14 @@
   }
 
   const dstPoints = [
-    { x: 128, y: 90 },
-    { x: 255, y: 128 },
-    { x: 128, y: 192 },
     { x: 0, y: 128 },
+    { x: 128, y: 192 },
+    { x: 255, y: 128 },
+    { x: 128, y: 90 },
   ];
   drawQuad(dstPoints)
+
+  var backgroundImg = null
 
   function openImage(event) {
     var selectedFile = event.target.files[0]
@@ -47,14 +50,65 @@
     reader.onload = function(event) {
       var img = new Image();
       img.onload = function() {
+        backgroundImg = this;
         const canvas = document.getElementById("myCanvas");
+        canvas.width = backgroundImg.width
+        canvas.height = backgroundImg.height
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0,0);
+        ctx.drawImage(backgroundImg, 0,0);
       }
       img.src = event.target.result;
     };
     reader.readAsDataURL(selectedFile);
+  }
 
+  function onCanvasMouseDown(event) {
+    var [relativeX, relativeY] = [event.x, event.y]
+    var minDist = 999999;
+    for(var i=0;i<4;i++) {
+      var p = dstPoints[i];
+      var {x,y} = p
+      var dist = (relativeX - x)**2 + (relativeY - y)**2
+      if(dist < minDist) {
+        this._selectedPoint = p
+        minDist = dist
+      }
+    }
+  }
+
+  function onCanvasMouseUp(event) {
+    var [relativeX, relativeY] = [event.x, event.y];
+    if(!this._selectedPoint) {
+      return;
+    }
+    this._selectedPoint.x = relativeX;
+    this._selectedPoint.y = relativeY;
+
+    updateCanvas();
+
+    this._selectedPoint = null;
+  }
+
+  function updateCanvas() {
+    const canvas = document.getElementById("myCanvas");
+    canvas.width = backgroundImg.width
+    canvas.height = backgroundImg.height
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(backgroundImg, 0,0);
+
+    // update marker
+    drawQuad(dstPoints);
+    detectMarker();
+  }
+
+  function detectMarker() {
+    const canvas = document.getElementById("myCanvas");
+    arToolkitSource.domElement.src = canvas.toDataURL();
+    initARContext();
+
+    var transformMat = getMarkerTransformMat();
+    var div = document.getElementById('resultDiv');
+    div.innerText = JSON.Stringify(transformMat);
   }
 
 </script>
@@ -64,7 +118,6 @@
   //		Init
   //////////////////////////////////////////////////////////////////////////////////
 
-  // init renderer
   var renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true
@@ -129,7 +182,6 @@
     }, 2000);
   })
 
-  // handle resize
   window.addEventListener('resize', function () {
     onResize()
   })
