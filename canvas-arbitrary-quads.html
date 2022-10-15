@@ -16,6 +16,9 @@
 <img id="markerImg" src="./Hiro_marker_ARjs.png"></img>
 <br>
 <input type="file" id="myFile" accept="image/png, image/jpeg" onchange="openImage(event)">
+<p>
+
+<h3>Transformation matrix</h3>
 <div id="resultDiv" />
 
 <script>
@@ -60,6 +63,20 @@
       img.src = event.target.result;
     };
     reader.readAsDataURL(selectedFile);
+
+    hideArCanvas()
+  }
+
+  function hideArCanvas() {
+    var myCanvas = document.getElementById('myCanvas');
+    var canvases = document.getElementsByTagName('canvas');
+    for(var i=0;i<canvases.length;i++) {
+      var c = canvases[i];
+      if(c == myCanvas) {
+        continue;
+      }
+      c.style.display = 'none'
+    }
   }
 
   function onCanvasMouseDown(event) {
@@ -106,9 +123,12 @@
     arToolkitSource.domElement.src = canvas.toDataURL();
     initARContext();
 
-    var transformMat = getMarkerTransformMat();
-    var div = document.getElementById('resultDiv');
-    div.innerText = JSON.Stringify(transformMat);
+    setTimeout(() => {
+      var transformMat = getMarkerTransformMat();
+      var div = document.getElementById('resultDiv');
+      div.innerText = Object.values(Object.values(transformMat));
+    }, 1000);
+
   }
 
 </script>
