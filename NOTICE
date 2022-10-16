@@ -1,0 +1,29 @@
+camera-post-estimator-tool
+Copyright 2022 Yuhan Zhang
+
+This product includes software developed by:
+
+three.ar.js
+Copyright (c) 2017 Google
+Apache License, Version 2.0
+
+gl-preserve-state
+Copyright (c) 2016 Brandon Jones
+zlib License
+
+three.js
+Copyright 2010-2021 Three.js Authors
+SPDX-License-Identifier: MIT
+
+matrix.js
+Copyright 2016 node-matrices Authors
+SPDX-License-Identifier: MIT
+https://github.com/not-an-aardvark/node-matrices
+
+AR.js
+Copyright (c) 2020 AR.js
+SPDX-License-Identifier: MIT
+
+The ping sound effect (ping.mp3) in
+examples/mxroyale/tourdeflexmodules/src/mx/effects/assets
+was created by CameronMusic. (http://www.freesound.org/people/cameronmusic/sounds/138420/)

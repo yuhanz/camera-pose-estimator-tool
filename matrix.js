@@ -1,4 +1,4 @@
-// from https://github.com/not-an-aardvark/node-matrices
+// from https://github.com/not-an-aardvark/node-matrices (MIT)
 class Matrix {
   constructor () {
     let args = _.toArray(arguments);
