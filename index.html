@@ -31,7 +31,9 @@ An interactive online tool to let user upload an image of a scene and place the 
 
 <div id="outputDiv" style="display:none;">
   <h3>Transformation matrix</h3>
-  <textarea id="resultDiv" rows="4" cols="80"></textarea>
+  <textarea id="transformMat" rows="4" cols="80"></textarea>
+  <br><b>Camera Matrix</b>
+  <textarea id="cameraMat" rows="4" cols="80"></textarea>
 </div>
 
 <script>
@@ -142,8 +144,11 @@ An interactive online tool to let user upload an image of a scene and place the 
 
     setTimeout(() => {
       var transformMat = getMarkerTransformMat();
-      var div = document.getElementById('resultDiv');
+      var cameraMat = getCameraMatrix()
+      var div = document.getElementById('transformMat');
       div.innerText = Object.values(Object.values(transformMat));
+      var div = document.getElementById('cameraMat');
+      div.innerText = Object.values(Object.values(cameraMat));
       document.getElementById('outputDiv').style.display = 'block';
     }, 300);
 
@@ -273,6 +278,9 @@ An interactive online tool to let user upload an image of a scene and place the 
     arToolkitContext.update(arToolkitSource.domElement)
     // return arToolkitContext.arController.marker_transform_mat
     return arToolkitContext.arController.transform_mat
+  }
+  function getCameraMatrix() {
+    return arToolkitContext.arController.camera_mat
   }
 
 
