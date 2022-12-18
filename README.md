@@ -18,4 +18,4 @@ To deduce the transformation matrix between the matrices of 2 scenes:
 - To transform from m1 to m2, transform m1 back to identity, then transform identity to m2: `m1 * inv * m2 = m2` -> `m1 * (inv * m2) = m2`. Thus `inv * m2` transforms m1 to m2 (from scene 1 to scene 2)
 - Reverse the marker transformation to get the camera transformation [Link to snippet](https://gist.github.com/yuhanz/10d9177c9348804bd439f1f5a579c555)
 
-- Given the camera project matrix, find out the near, far planes: h[Link to snippet](ttps://gist.github.com/yuhanz/c1196966c5f1a40fadf2f9d5a302979f)
+- Given the camera project matrix, find out the near, far planes: [Link to snippet](https://gist.github.com/yuhanz/c1196966c5f1a40fadf2f9d5a302979f)
